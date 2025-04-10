@@ -74,6 +74,15 @@ def edit(movie_id):
     return render_template("edit.html", movie=movie)
 
 
+@app.route('/movie/delete/<int:movie_id>', methods=['POST'])
+def delete(movie_id):
+    movie = Movie.query.get_or_404(movie_id)
+    db.session.delete(movie)
+    db.session.commit()
+    flash("Item Delete")
+    return redirect(url_for('index'))
+
+
 @app.cli.command()
 def forge():
     """Generate fake data."""
